@@ -59,7 +59,7 @@ public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 	public void run() {
 		while (!CadseCore.isCadseRuntimeRunning())
 			try {
-				wait(10);
+				Thread.sleep(10);
 				if (end)
 					return;
 			} catch (InterruptedException e) {
