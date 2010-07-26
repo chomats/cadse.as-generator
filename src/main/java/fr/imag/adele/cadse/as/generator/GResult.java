@@ -32,19 +32,6 @@ public class GResult extends GenStringBuilder {
 	
 	
 
-
-	/** The Constant TABS. */
-	static public final char[][]	TABS	= { {}, { '\t' }, { '\t', '\t' }, { '\t', '\t', '\t' },
-			{ '\t', '\t', '\t', '\t' }, { '\t', '\t', '\t', '\t', '\t' }, { '\t', '\t', '\t', '\t', '\t', '\t' },
-			{ '\t', '\t', '\t', '\t', '\t', '\t', '\t' }, { '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t' },
-			{ '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t' },
-			{ '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t' },
-			{ '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t' },
-			{ '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t' },
-			{ '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t' },
-			{ '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t' },
-			{ '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t', '\t' } };
-
 	/**
 	 * Instantiates a new string builder for generation of source code content.
 	 * @param context 
@@ -53,7 +40,6 @@ public class GResult extends GenStringBuilder {
 	 * @param gGenerator 
 	 */
 	public GResult(GGenerator gGenerator, Item currentItem, GGenFile gf, GToken kind, GenContext context) {
-		_sb = new StringBuilder();
 		_gGenerator = gGenerator;
 		_gf = gf;
 		_currentToken = kind;
@@ -61,16 +47,6 @@ public class GResult extends GenStringBuilder {
 		_currentItem = currentItem;
 	}
 
-	/** The sb. */
-	private StringBuilder	_sb;
-
-	/** The tabs. */
-	int						tabs		= 0;
-
-	/** The DEBUG. */
-	public boolean			DEBUG		= false;
-
-	private boolean			_appenTab	= false;
 
 	/**
 	 * Begin.
@@ -102,25 +78,11 @@ public class GResult extends GenStringBuilder {
 	 * @return the gen string builder
 	 */
 	public GResult newline() {
-		_sb.append("\n");
-		_appenTab = true;
+		super.newline();
 		return this;
 	}
 
-	protected void appendTab() {
-		if (!_appenTab) {
-			return;
-		}
-		_appenTab = false;
-		if (tabs < TABS.length) {
-			_sb.append(TABS[tabs]);
-		} else {
-			_sb.ensureCapacity(_sb.length() + tabs);
-			for (int i = 0; i < tabs; i++) {
-				_sb.append('\t');
-			}
-		}
-	}
+	
 
 	/**
 	 * Append.
@@ -131,8 +93,7 @@ public class GResult extends GenStringBuilder {
 	 * @return the gen string builder
 	 */
 	public GResult append(boolean b) {
-		appendTab();
-		_sb.append(b);
+		super.append(b);
 		return this;
 	}
 
@@ -902,17 +863,7 @@ public class GResult extends GenStringBuilder {
 	 * @return the gen string builder
 	 */
 	public GResult appendNewValue(String value, boolean vir) {
-		appendTab();
-		if (value == null) {
-			_sb.append(" null");
-		} else {
-			value = getlastclassName(value);
-			_sb.ensureCapacity(_sb.length() + value.length() + 8);
-			_sb.append(" new ").append(value).append("()");
-		}
-		if (vir) {
-			_sb.append(",");
-		}
+		super.appendNewValue(value, vir);
 		return this;
 	}
 
@@ -925,14 +876,7 @@ public class GResult extends GenStringBuilder {
 	 * @return the gen string builder
 	 */
 	public GResult appendNewBegin(String value) {
-		appendTab();
-		if (value == null) {
-			_sb.append(" null");
-		} else {
-			value = getlastclassName(value);
-			_sb.ensureCapacity(_sb.length() + value.length() + 8);
-			_sb.append(" new ").append(value).append("(");
-		}
+		super.appendNewBegin(value);
 		return this;
 	}
 
@@ -972,35 +916,11 @@ public class GResult extends GenStringBuilder {
 	 * @return the gen string builder
 	 */
 	public GResult appendNewValue(String value, boolean vir, String param) {
-		appendTab();
-		if (value == null) {
-			_sb.append(" null");
-		} else {
-			value = getlastclassName(value);
-			_sb.ensureCapacity(_sb.length() + value.length() + 8);
-			_sb.append(" new ").append(value).append("(").append(param).append(")");
-		}
-		if (vir) {
-			_sb.append(",");
-		}
+		super.appendNewValue(value, vir, param);
 		return this;
 	}
 
-	/**
-	 * Gets the lastclass name.
-	 * 
-	 * @param value
-	 *            the value
-	 * 
-	 * @return the lastclass name
-	 */
-	private String getlastclassName(String value) {
-		int index = value.lastIndexOf('.');
-		if (index == -1) {
-			return value;
-		}
-		return value.substring(index + 1);
-	}
+	
 
 	/**
 	 * Append_exp_vir.
@@ -1015,8 +935,7 @@ public class GResult extends GenStringBuilder {
 	 * @return the gen string builder
 	 */
 	public <T> GResult append_exp_vir(Item item, IAttributeType<T> key, T defaultValue) {
-		Object v = item.getAttributeWithDefaultValue(key, defaultValue);
-		appendExpValue_vir(v.toString());
+		super.append_exp_vir(item, key, defaultValue);
 		return this;
 	}
 
@@ -1031,9 +950,7 @@ public class GResult extends GenStringBuilder {
 	 * @return the gen string builder
 	 */
 	public GResult append_string_vir(Item item, IAttributeType<String> key) {
-		Object v = item.getAttributeWithDefaultValue(key, "");
-		appendStringValue(v.toString());
-		append(",");
+		super.append_string_vir(item, key);
 		return this;
 	}
 
@@ -1043,17 +960,12 @@ public class GResult extends GenStringBuilder {
 	 * @return the gen string builder
 	 */
 	public GResult appendGeneratedTag() {
-		appendLines("/**");
-		appendLines("\t@generated");
-		appendLines("*/");
+		super.appendGeneratedTag();
 		return this;
 	}
 
 	public void appendLines(String ...l) {
 		lines = ArraysUtil.addList(String.class, lines, l);
-		for (String line : l) {
-			newline().append(line);
-		}
 	}
 	
 	

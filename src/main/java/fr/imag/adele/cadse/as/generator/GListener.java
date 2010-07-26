@@ -14,11 +14,13 @@ import fr.imag.adele.cadse.core.transaction.delta.ImmutableItemDelta;
 import fr.imag.adele.cadse.core.transaction.delta.ImmutableWorkspaceDelta;
 
 public class GListener extends WorkspaceListener {
-	GAction ga = new GAction();
+	//GAction ga = new GAction();
+	RuntimeGenerator runtimeGenerator;
 	
-	public GListener() {
+	public GListener(RuntimeGenerator runtimeGenerator) {
 		setKind(ListenerKind.BUILD);
 		CadseCore.getLogicalWorkspace().addListener(this, 0xFFFFF);
+		this.runtimeGenerator = runtimeGenerator;
 	}
 
 	
@@ -49,18 +51,7 @@ public class GListener extends WorkspaceListener {
 		}
 
 		for (Item currentItem : itemsToGenerate) {
-			GGenFile[] gf = currentItem.getType().adapts(GGenFile.class);
-			if (gf != null) {
-				for (GGenFile gGenFile : gf) {
-					GenContext cxt = new GenContext(null);
-					try {
-						ga.generate(gGenFile, currentItem, cxt );
-					} catch (CoreException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
+			runtimeGenerator.generate(currentItem);
 		}
 	}
 
