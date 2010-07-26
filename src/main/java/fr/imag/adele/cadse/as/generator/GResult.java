@@ -255,7 +255,15 @@ public class GResult extends GenStringBuilder {
 	 */
 	public GResult append(String str) {
 		appendTab();
-		_sb.append(str);
+		String[] lines = str.split("\n");
+		boolean newLine = false;
+		for (String l : lines) {
+			if (newLine)
+				newline();
+			appendTab();
+			_sb.append(l);
+			newLine = true;
+		}
 		return this;
 	}
 

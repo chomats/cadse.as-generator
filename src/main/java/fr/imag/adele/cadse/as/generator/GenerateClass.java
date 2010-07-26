@@ -40,7 +40,7 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 	public GenerateClass(GToken key) {
 		super(GCst.t_class);
 		_key = key;
-		relatif(GCst.t_class).setAggregator(new MyAggregator());
+		relatif(GCst.t_class).setAggregator(new GenerateClassAggregator());
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 		return (S) new GenClassState();
 	}
 
-	class MyAggregator extends GAggregator {
+	class GenerateClassAggregator extends GAggregator {
 		Map<GToken, GResult> _resultMap = new HashMap<GToken, GResult>();
 		
 
@@ -106,6 +106,22 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 					}
 				}
 			}
+			if (clState.isClass) {
+				extendClassName = clState.fExtendedClassName;
+				rTemp = _resultMap.get(GCst.t_extends);
+				if (rTemp != null && rTemp.getLines().length == 1) {
+					extendClassName = rTemp.getLines()[0];
+				}
+				IAnnotation annotation = clState.getAnnotationOwGen();
+				if (annotation != null) {
+					
+				}
+				if (extendClassName != null) {
+					if (clState._packageName.equals(clState.fExtendedPackageName))
+						clState.getImports().add(clState.fExtendedPackageName+"."+clState.fClassName);
+				}
+				
+			}
 
 			for (String itf : clState.getImports()) {
 				sb.newline().append("import ").append(itf).append(";");
@@ -120,16 +136,8 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 				sb.append("interface ");
 			}
 			sb.append(clState.fClassName);
-			if (clState.isClass) {
-				extendClassName = clState.fExtendedClassName;
-				rTemp = _resultMap.get(GCst.t_extends);
-				if (rTemp != null && rTemp.getLines().length == 1) {
-					extendClassName = rTemp.getLines()[0];
-				}
-				IAnnotation annotation = clState.getAnnotationOwGen();
-				if (extendClassName != null) {
-					sb.append(" extends ").append(extendClassName);
-				}
+			if (clState.isClass && extendClassName != null) {
+				sb.append(" extends ").append(extendClassName);
 			}
 
 			String[] implementsClassName = clState.getImplementsClassName();

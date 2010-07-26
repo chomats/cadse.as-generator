@@ -183,7 +183,7 @@ public class GenClassState extends GenState {
 	}
 
 	public IAnnotation getAnnotationOwGen() {
-		if (this.type == null)
+		if (this.type == null || !this.type.exists())
 			return null;
 		IAnnotation[] an;
 		try {

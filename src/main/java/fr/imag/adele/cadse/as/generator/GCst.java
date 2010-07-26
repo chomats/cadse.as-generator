@@ -23,5 +23,11 @@ public class GCst {
 	final static public GToken  t_project = new GToken("project");
 	final static public GToken  t_srcpath = new GToken("srcpath");
 	
+	final static public GToken mf_import_package = new GToken("import-package");
+	final static public GToken mf_export_package = new GToken("export-package");
+	final static public GToken mf_require_bundle = new GToken("require-bundle");
+
+	
+	
 	
 }
