@@ -18,7 +18,7 @@ public class GAggregator {
 	}
 
 	public void append(GResult result) {
-		_result.appendLines(result.lines);
+		_result.append(result);
 	}
 
 	public GResult setResult(GGenerator gGenerator, Item currentItem,
@@ -32,7 +32,7 @@ public class GAggregator {
 	}
 
 	public void append(GResult result, GToken cToken) {
-		_result.appendLines(result.lines);
+		_result.append(result);
 	}
 
 	public void setState(GenState state) {

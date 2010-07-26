@@ -49,12 +49,14 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 		super.init(state, currentItem, g, cxt);
 		GenClassState gcs = (GenClassState) state;
 		JavaFileContentManager jf = g.getJavaFileContentManager(getKey(), currentItem);
-		String cn = jf.getClassName(cxt);
-		String pn = jf.getPackageName(cxt);
-		IType javatype = jf.getJavaType(cxt);
-		gcs._packageName = pn;
-		gcs.fClassName = cn;
-		gcs.type = javatype;		
+		if (jf != null) {
+			String cn = jf.getClassName(cxt);
+			String pn = jf.getPackageName(cxt);
+			IType javatype = jf.getJavaType(cxt);
+			gcs._packageName = pn;
+			gcs.fClassName = cn;
+			gcs.type = javatype;
+		}
 	}
 	
 	@Override

@@ -18,8 +18,6 @@ import fr.imag.adele.cadse.core.content.ContentItem;
 
 public class GGenerator implements GObject, IGenerator {
 
-	private static final GAggregator DEFAULT_AGGREGATOR = new GAggregator();
-
 	private static final UUID[] NO = new UUID[0];
 
 	protected Map<GObject, GAggregator> _aggregator = new HashMap<GObject, GAggregator>();
@@ -154,7 +152,7 @@ public class GGenerator implements GObject, IGenerator {
 		if (r == null)
 			r = kind.getAggregator();
 		if (r == null)
-			r = DEFAULT_AGGREGATOR;
+			r = new GAggregator();
 		return r;
 	}
 

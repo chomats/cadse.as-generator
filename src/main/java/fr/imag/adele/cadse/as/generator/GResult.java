@@ -1051,6 +1051,9 @@ public class GResult extends GenStringBuilder {
 
 	public void appendLines(String ...l) {
 		lines = ArraysUtil.addList(String.class, lines, l);
+		for (String line : l) {
+			newline().append(line);
+		}
 	}
 	
 	
