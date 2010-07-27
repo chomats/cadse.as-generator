@@ -1,6 +1,5 @@
 package fr.imag.adele.cadse.as.generator;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -15,7 +14,7 @@ public class GenState {
 	
 	public Set<String> getImports() {
 		if (_imports == null)
-			_imports = new HashSet<String>();
+			_imports = new TreeSet<String>();
 		
 		return _imports;
 	}
