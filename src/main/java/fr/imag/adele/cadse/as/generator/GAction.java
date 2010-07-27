@@ -5,9 +5,6 @@ import org.eclipse.core.runtime.CoreException;
 
 import fede.workspace.eclipse.composition.java.EclipsePluginContentManger;
 import fede.workspace.tool.eclipse.MappingManager;
-import fr.imag.adele.cadse.as.generator.GGenFile;
-import fr.imag.adele.cadse.as.generator.GGenerator;
-import fr.imag.adele.cadse.as.generator.GToken;
 import fr.imag.adele.cadse.core.GenContext;
 import fr.imag.adele.cadse.core.Item;
 import fr.imag.adele.cadse.objectadapter.ObjectAdapter;

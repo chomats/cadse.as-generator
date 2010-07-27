@@ -1,9 +1,7 @@
 package fr.imag.adele.cadse.as.generator;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-import fr.imag.adele.cadse.core.Item;
 import fr.imag.adele.cadse.util.ArraysUtil;
 
 public class GToken implements GObject {
@@ -14,7 +12,7 @@ public class GToken implements GObject {
 	GToken _parent;
 	private GAggregator _aggregator;
 	int _max = -1;
-	private Class<? extends GIter> _iterClass;
+	private Class<? extends ItemIterable> _iterClass;
 	
 	public GToken(GObject owner, String name) {
 		this(null, owner, name, true);
@@ -98,7 +96,7 @@ public class GToken implements GObject {
 		return this;
 	}
 	
-	public GToken setIterClass(Class<? extends GIter> iterClass) {
+	public GToken setIterClass(Class<? extends ItemIterable> iterClass) {
 		_iterClass = iterClass;
 		return this;
 	}
@@ -128,7 +126,7 @@ public class GToken implements GObject {
 		return _superToken == null ? this : _superToken;
 	}
 
-	public GIter getIter() {
+	public ItemIterable getIter() {
 		if (_iterClass != null)
 			try {
 				return _iterClass.newInstance();
@@ -145,7 +143,7 @@ public class GToken implements GObject {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		return new GIterPart();
+		return new ItemPartIterable();
 	}
 
 	@Override

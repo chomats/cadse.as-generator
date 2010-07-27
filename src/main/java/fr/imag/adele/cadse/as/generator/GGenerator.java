@@ -2,7 +2,7 @@ package fr.imag.adele.cadse.as.generator;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -13,8 +13,10 @@ import org.eclipse.core.resources.IProject;
 import fede.workspace.eclipse.java.manager.JavaFileContentManager;
 import fr.imag.adele.cadse.core.GenContext;
 import fr.imag.adele.cadse.core.Item;
+import fr.imag.adele.cadse.core.ItemFilter;
 import fr.imag.adele.cadse.core.LinkType;
 import fr.imag.adele.cadse.core.content.ContentItem;
+import fr.imag.adele.cadse.objectadapter.ObjectAdapter;
 
 public class GGenerator implements GObject, IGenerator {
 
@@ -78,6 +80,7 @@ public class GGenerator implements GObject, IGenerator {
 		return resultAll;
 	}
 
+	
 	/**
 	 * Generate.
 	 * 
@@ -96,7 +99,7 @@ public class GGenerator implements GObject, IGenerator {
 	 */
 
 	public GResult generate(Item currentItem, GGenFile<?> gf, GToken kind,
-			GenContext context, GIter giter, GenState state) {
+			GenContext context, ItemIterable giter, GenState state) {
 
 		GAggregator gaggregator = getAggregator(kind);
 		GResult resultAll = gaggregator.setResult(this, currentItem, gf, kind,
@@ -116,7 +119,7 @@ public class GGenerator implements GObject, IGenerator {
 		int count = 0;
 		int max = kind.getMax();
 
-		giter.beginAll(currentItem, gf, kind, context, this);
+		giter.beginAll(currentItem, context);
 		ONE: for (Item anItem : giter) {
 
 			// TODO manage a cache
@@ -142,7 +145,7 @@ public class GGenerator implements GObject, IGenerator {
 			gf.generatePartFile(resultAll, currentItem, gf, kind, context, this, state);
 		}
 		gaggregator.endAll(currentItem, gf, kind, context, this);
-		giter.endAll(currentItem, gf, kind, context, this);
+		giter.endAll(currentItem, context);
 
 		return resultAll;
 	}
@@ -163,8 +166,8 @@ public class GGenerator implements GObject, IGenerator {
 	
 	public GResult generate(Item currentItem, GGenFile gf, GToken kind,
 			GenContext context, GenState state) {
-		GIter iter = null;
-		iter = currentItem.getType().adapt(GIter.class);
+		ItemIterable iter = null;
+		iter = currentItem.getType().adapt(ItemIterable.class);
 		if (iter == null)
 			iter = kind.getIter();
 		
@@ -178,7 +181,7 @@ public class GGenerator implements GObject, IGenerator {
 
 	public GResult generate(LinkType linkID, Item currentItem, GGenFile gf,
 			GToken kind, GenContext context, GenState state) {
-		return generate(currentItem, gf, kind, context, new GLinkIterator(
+		return generate(currentItem, gf, kind, context, new ItemLinkIterable(
 				currentItem, linkID), state);
 	}
 

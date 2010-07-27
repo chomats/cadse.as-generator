@@ -2,9 +2,6 @@ package fr.imag.adele.cadse.as.generator;
 
 import java.util.HashSet;
 
-import org.eclipse.core.runtime.CoreException;
-
-import fr.imag.adele.cadse.core.GenContext;
 import fr.imag.adele.cadse.core.Item;
 import fr.imag.adele.cadse.core.ItemState;
 import fr.imag.adele.cadse.core.ItemType;
