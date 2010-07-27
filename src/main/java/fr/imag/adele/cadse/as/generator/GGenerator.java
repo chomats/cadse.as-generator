@@ -2,7 +2,6 @@ package fr.imag.adele.cadse.as.generator;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -13,10 +12,10 @@ import org.eclipse.core.resources.IProject;
 import fede.workspace.eclipse.java.manager.JavaFileContentManager;
 import fr.imag.adele.cadse.core.GenContext;
 import fr.imag.adele.cadse.core.Item;
-import fr.imag.adele.cadse.core.ItemFilter;
 import fr.imag.adele.cadse.core.LinkType;
 import fr.imag.adele.cadse.core.content.ContentItem;
-import fr.imag.adele.cadse.objectadapter.ObjectAdapter;
+import fr.imag.adele.cadse.core.iter.ItemIterable;
+import fr.imag.adele.cadse.core.iter.ItemLinkIterable;
 
 public class GGenerator implements GObject, IGenerator {
 

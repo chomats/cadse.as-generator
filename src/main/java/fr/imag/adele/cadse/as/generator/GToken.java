@@ -2,6 +2,8 @@ package fr.imag.adele.cadse.as.generator;
 
 import java.util.Map;
 
+import fr.imag.adele.cadse.core.iter.ItemIterable;
+import fr.imag.adele.cadse.core.iter.ItemPartIterable;
 import fr.imag.adele.cadse.util.ArraysUtil;
 
 public class GToken implements GObject {
