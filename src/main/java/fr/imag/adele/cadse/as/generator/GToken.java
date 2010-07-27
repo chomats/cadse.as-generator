@@ -147,4 +147,9 @@ public class GToken implements GObject {
 			}
 		return new GIterPart();
 	}
+
+	@Override
+	public String toString() {
+		return "<"+_name+">";
+	}
 }
