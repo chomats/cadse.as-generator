@@ -98,7 +98,6 @@ public class GGenerator implements GObject, IGenerator {
 	public GResult generate(Item currentItem, GGenFile<?> gf, GToken kind,
 			GenContext context, GIter giter, GenState state) {
 
-		giter.beginAll(currentItem, gf, kind, context, this);
 		GAggregator gaggregator = getAggregator(kind);
 		GResult resultAll = gaggregator.setResult(this, currentItem, gf, kind,
 				context);
@@ -117,6 +116,7 @@ public class GGenerator implements GObject, IGenerator {
 		int count = 0;
 		int max = kind.getMax();
 
+		giter.beginAll(currentItem, gf, kind, context, this);
 		ONE: for (Item anItem : giter) {
 
 			// TODO manage a cache
@@ -128,7 +128,7 @@ public class GGenerator implements GObject, IGenerator {
 				if (!p.match(gf, kind))
 					continue;
 				try {
-					p.generatePartFile(resultAll, currentItem, gf, kind,
+					p.generatePartFile(resultAll, anItem, gf, kind,
 							context, this, state);
 				} catch (Throwable e) {
 					logException(producteurs[i], e);

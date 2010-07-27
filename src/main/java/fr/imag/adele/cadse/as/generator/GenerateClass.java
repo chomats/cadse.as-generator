@@ -117,8 +117,9 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 					
 				}
 				if (extendClassName != null) {
-					if (clState._packageName.equals(clState.fExtendedPackageName))
-						clState.getImports().add(clState.fExtendedPackageName+"."+clState.fClassName);
+					if (!clState._packageName.equals(clState.fExtendedPackageName)) {
+						clState.getImports().add(clState.fExtendedPackageName+"."+extendClassName);
+					}
 				}
 				
 			}
