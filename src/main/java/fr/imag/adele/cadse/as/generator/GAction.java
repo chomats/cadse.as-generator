@@ -51,7 +51,7 @@ public class GAction extends ObjectAdapter<GAction> {
 	
 		IFile file = g.getFile(currentItem, fileToken, cxt);
 		String content = gFile.generate(g, currentItem, cxt);
-		if (content == null) 
+		if (content == null || file == null) 
 			return;
 		try {
 			if ("java".equals(file.getFileExtension()))
