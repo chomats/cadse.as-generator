@@ -127,7 +127,7 @@ public class GGenerator implements GObject, IGenerator {
 
 			for (int i = 0; i < producteurs.length; i++) {
 				GGenPartFile p = producteurs[i];
-				if (!p.match(gf, kind))
+				if (!p.match(gf, kind, anItem))
 					continue;
 				try {
 					p.generatePartFile(resultAll, anItem, gf, kind,
@@ -169,7 +169,8 @@ public class GGenerator implements GObject, IGenerator {
 		iter = currentItem.getType().adapt(ItemIterable.class);
 		if (iter == null)
 			iter = kind.getIter();
-		
+		else
+			iter = iter.cloneIter();
 		return generate(currentItem, gf, kind, context, iter, state);
 	}
 

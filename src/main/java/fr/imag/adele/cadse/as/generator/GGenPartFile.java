@@ -37,7 +37,7 @@ public class GGenPartFile extends ObjectAdapter<GGenPartFile> implements GObject
 		return GGenPartFile.class;
 	}
 	
-	public boolean match(GGenFile gf, GToken t) {
+	public boolean match(GGenFile gf, GToken t, Item currentItem) {
 		return getMatchedToken().contains(t);
 	}
 	
