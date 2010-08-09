@@ -54,8 +54,8 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 			String pn = jf.getPackageName(cxt);
 			IType javatype = jf.getJavaType(cxt);
 			gcs._packageName = pn;
-			gcs.fClassName = cn;
-			gcs.type = javatype;
+			gcs._className = cn;
+			gcs._type = javatype;
 		}
 	}
 	
@@ -95,10 +95,10 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 				clState.getImports().addAll(Arrays.asList(rTemp.getLines()));
 			String extendClassName = null;
 
-			if (clState.fImplementsClassName != null) {
-				for (int i = 0; i < clState.fImplementsClassName.length; i++) {
-					String implClassName = clState.fImplementsClassName[i];
-					String packageName = clState.fImplementsPackageName[i];
+			if (clState._implementsClassName != null) {
+				for (int i = 0; i < clState._implementsClassName.length; i++) {
+					String implClassName = clState._implementsClassName[i];
+					String packageName = clState._implementsPackageName[i];
 					if (packageName != null
 							&& (clState._packageName == null || !clState._packageName
 									.equals(packageName))) {
@@ -106,8 +106,8 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 					}
 				}
 			}
-			if (clState.isClass) {
-				extendClassName = clState.fExtendedClassName;
+			if (clState._isClass) {
+				extendClassName = clState._extendedClassName;
 				rTemp = _resultMap.get(GCst.t_extends);
 				if (rTemp != null && rTemp.getLines().length == 1) {
 					extendClassName = rTemp.getLines()[0];
@@ -117,8 +117,8 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 					
 				}
 				if (extendClassName != null) {
-					if (!clState._packageName.equals(clState.fExtendedPackageName)) {
-						clState.getImports().add(clState.fExtendedPackageName+"."+extendClassName);
+					if (!clState._packageName.equals(clState._extendedPackageName)) {
+						clState.getImports().add(clState._extendedPackageName+"."+extendClassName);
 					}
 				}
 				
@@ -131,19 +131,19 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 			sb.newline();
 			sb.appendGeneratedTag();
 			sb.newline().append("public ");
-			if (clState.isClass) {
+			if (clState._isClass) {
 				sb.append("class ");
 			} else {
 				sb.append("interface ");
 			}
-			sb.append(clState.fClassName);
-			if (clState.isClass && extendClassName != null) {
+			sb.append(clState._className);
+			if (clState._isClass && extendClassName != null) {
 				sb.append(" extends ").append(extendClassName);
 			}
 
 			String[] implementsClassName = clState.getImplementsClassName();
 			if (implementsClassName != null && implementsClassName.length != 0) {
-				if (clState.isClass) {
+				if (clState._isClass) {
 					sb.append(" implements ");
 				} else {
 					sb.append(" extends ");
@@ -161,7 +161,7 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 			sb.append(_resultMap.get(GCst.t_cstes));
 			sb.append(_resultMap.get(GCst.t_field));
 			sb.append(_resultMap.get(GCst.t_method_static));
-			if (clState.isClass) {
+			if (clState._isClass) {
 				sb.append(_resultMap.get(GCst.t_constructor));
 			}
 			sb.append(_resultMap.get(GCst.t_method));

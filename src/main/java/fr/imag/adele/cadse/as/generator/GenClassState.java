@@ -19,54 +19,52 @@ public class GenClassState extends GenState {
 	public String _packageName;
 
 	/** The class name. */
-	public String fClassName;
+	public String _className;
 
 	/** The extended class name. */
-	public String fExtendedClassName;
+	public String _extendedClassName;
 
 	/** The extended package name. */
-	public String fExtendedPackageName;
+	public String _extendedPackageName;
 
 	/** The generate class. */
-	public boolean fGenerateClass;
+	public boolean _generateClass;
 
 	/** The implements class name. */
-	public String[] fImplementsClassName = null;
+	public String[] _implementsClassName = null;
 
 	/** The implements package name. */
-	public String[] fImplementsPackageName;
+	public String[] _implementsPackageName;
 
 	/** The is class. */
-	public boolean isClass = true;
+	public boolean _isClass = true;
 
 	/** The can overwrite etends class. */
-	public boolean fCanOverwriteEtendsClass = false;
+	public boolean _canOverwriteEtendsClass = false;
 
 	/** The type. */
-	public IType type;
+	public IType _type;
 
 	/** The cxt. */
 	public ContextVariable cxt;
 
-	private Set<String> imports = new TreeSet<String>();
-
 	public void init() {
-		if (fExtendedClassName != null) {
+		if (_extendedClassName != null) {
 			String[] p = JavaIdentifier
-					.getPackageAndClassName(fExtendedClassName);
+					.getPackageAndClassName(_extendedClassName);
 			if (p[0] != null) {
-				fExtendedClassName = p[1];
-				fExtendedPackageName = p[0];
+				_extendedClassName = p[1];
+				_extendedPackageName = p[0];
 			}
 		}
-		if (fImplementsClassName != null) {
-			fImplementsPackageName = new String[fImplementsClassName.length];
-			for (int i = 0; i < fImplementsClassName.length; i++) {
-				String s = fImplementsClassName[i];
+		if (_implementsClassName != null) {
+			_implementsPackageName = new String[_implementsClassName.length];
+			for (int i = 0; i < _implementsClassName.length; i++) {
+				String s = _implementsClassName[i];
 				String[] p = JavaIdentifier.getPackageAndClassName(s);
 				if (p[0] != null) {
-					fImplementsClassName[i] = p[1];
-					fImplementsPackageName[i] = p[0];
+					_implementsClassName[i] = p[1];
+					_implementsPackageName[i] = p[0];
 				}
 			}
 		}
@@ -84,10 +82,10 @@ public class GenClassState extends GenState {
 					packageName[i] = p[0];
 				}
 			}
-			fImplementsClassName = ArraysUtil.addList(String.class,
-					fImplementsClassName, className);
-			fImplementsPackageName = ArraysUtil.addList(String.class,
-					fImplementsPackageName, className);
+			_implementsClassName = ArraysUtil.addList(String.class,
+					_implementsClassName, className);
+			_implementsPackageName = ArraysUtil.addList(String.class,
+					_implementsPackageName, className);
 		}
 	}
 
@@ -98,14 +96,14 @@ public class GenClassState extends GenState {
 	 */
 	public String[] getImplementsClassName() {
 		HashSet<String> ret = new HashSet<String>();
-		if (fImplementsClassName != null) {
-			ret.addAll(Arrays.asList(fImplementsClassName));
+		if (_implementsClassName != null) {
+			ret.addAll(Arrays.asList(_implementsClassName));
 		}
 
 		try {
-			if (type != null && type.exists()) {
+			if (_type != null && _type.exists()) {
 				String[] itfs;
-				itfs = type.getSuperInterfaceNames();
+				itfs = _type.getSuperInterfaceNames();
 				ret.addAll(Arrays.asList(itfs));
 			}
 		} catch (Throwable e) {
@@ -122,7 +120,7 @@ public class GenClassState extends GenState {
 	 * @return the class name
 	 */
 	public String getClassName() {
-		return fClassName;
+		return _className;
 	}
 
 	/**
@@ -131,7 +129,7 @@ public class GenClassState extends GenState {
 	 * @return the extend class name
 	 */
 	public String getExtendClassName() {
-		return fExtendedClassName;
+		return _extendedClassName;
 	}
 
 	/**
@@ -140,7 +138,7 @@ public class GenClassState extends GenState {
 	 * @return true, if is generate class
 	 */
 	public boolean isGenerateClass() {
-		return fGenerateClass;
+		return _generateClass;
 	}
 
 	/**
@@ -161,8 +159,8 @@ public class GenClassState extends GenState {
 		if (isGenerateClass()) {
 			return getClassName();
 		}
-		if (fExtendedClassName != null) {
-			return JavaIdentifier.getlastclassName(fExtendedClassName);
+		if (_extendedClassName != null) {
+			return JavaIdentifier.getlastclassName(_extendedClassName);
 		}
 		throw new IllegalArgumentException(
 				"Cannot find the user class name");
@@ -175,19 +173,19 @@ public class GenClassState extends GenState {
 	 *            the new class
 	 */
 	public void setClass(boolean isClass) {
-		this.isClass = isClass;
+		this._isClass = isClass;
 	}
 
 	public void setCanOverwriteEtendsClass(boolean canOverwriteEtendsClass) {
-		fCanOverwriteEtendsClass = canOverwriteEtendsClass;
+		_canOverwriteEtendsClass = canOverwriteEtendsClass;
 	}
 
 	public IAnnotation getAnnotationOwGen() {
-		if (this.type == null || !this.type.exists())
+		if (this._type == null || !this._type.exists())
 			return null;
 		IAnnotation[] an;
 		try {
-			an = this.type.getAnnotations();
+			an = this._type.getAnnotations();
 		} catch (JavaModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
