@@ -179,7 +179,7 @@ public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 					ga = new GAction();
 				try {
 					ga.generate(e.file, e.item, cxt );
-				} catch (CoreException ex) {
+				} catch (Throwable ex) {
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
 				}
