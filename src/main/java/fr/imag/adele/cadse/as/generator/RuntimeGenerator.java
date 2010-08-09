@@ -221,7 +221,7 @@ public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 	@Override
 	synchronized public void generate(Item item, GGenFile<?> file) {
 		Entry e = new Entry(item,file);
-		if (_filesToGenrate.contains(e))
+		if (!_filesToGenrate.contains(e))
 			_filesToGenrate.add(e);
 	}
 }
