@@ -87,6 +87,15 @@ public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 			this.action = action;
 		}
 		
+		@Override
+		public boolean equals(Object obj) {
+			if (obj instanceof Entry){
+				Entry e = (Entry) obj;
+				return e.action == action && e.file == file && e.item == item;
+			}
+			return false;
+		}
+		
 	}
 	
 	@Requires
@@ -187,7 +196,7 @@ public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 				GenContext cxt = new GenContext(null);
 				try {
 					e.action.generate(e.item, cxt);
-				} catch (CoreException e1) {
+				} catch (Throwable e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -210,7 +219,9 @@ public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 	}
 
 	@Override
-	public void generate(Item item, GGenFile<?> file) {
-		_filesToGenrate.add(new Entry(item,file));
+	synchronized public void generate(Item item, GGenFile<?> file) {
+		Entry e = new Entry(item,file);
+		if (_filesToGenrate.contains(e))
+			_filesToGenrate.add(e);
 	}
 }
