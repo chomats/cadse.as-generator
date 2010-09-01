@@ -29,12 +29,17 @@ import fr.imag.adele.cadse.core.CadseException;
 import fr.imag.adele.cadse.core.IItemNode;
 import fr.imag.adele.cadse.core.Item;
 
-public class GenerateAction extends AbstractEclipseMenuAction {
+/**
+ * Action pour le menu generate.
+ * @author <a href="http://cadse.imag.fr">cadse team</a>
+ *
+ */
+class GenerateAction extends AbstractEclipseMenuAction {
 
 	List<Item> arrayOfgenerateObj;
 	private RuntimeGenerator _rg;
 
-	public GenerateAction(RuntimeGenerator rg, List<Item> arrayOfgenerateObj) {
+	GenerateAction(RuntimeGenerator rg, List<Item> arrayOfgenerateObj) {
 		this.arrayOfgenerateObj = arrayOfgenerateObj;
 		_rg = rg;
 	}

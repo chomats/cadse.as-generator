@@ -7,6 +7,13 @@ import fr.imag.adele.cadse.core.LinkType;
 import fr.imag.adele.cadse.core.attribute.IAttributeType;
 import fr.imag.adele.cadse.util.ArraysUtil;
 
+
+/**
+ * Cette class represente le result d'un appel ˆ un genfile..
+ * 
+ * @author <a href="http://cadse.imag.fr">cadse team</a>
+ *
+ */
 public class GResult extends GenStringBuilder {
 
 	

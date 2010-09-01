@@ -6,14 +6,27 @@ import fr.imag.adele.cadse.core.Item;
 import fr.imag.adele.cadse.core.ItemType;
 import fr.imag.adele.cadse.core.LinkType;
 
+/**
+ * Toutes les sources des liens incomings de type lt sont changé.
+ * 
+ * @author <a href="http://cadse.imag.fr">cadse team</a>
+ *
+ */
 public class GReferIncomingLink extends GRefer {
 
+	/**
+	 * type du lien recherché
+	 */
 	LinkType lt;
 
+	/**
+	 * 
+	 * @param typeSource type source à attacher l'adapter
+	 * @param lt type du lien recherché
+	 */
 	public GReferIncomingLink(ItemType typeSource, LinkType lt) {
-		super();
+		super(typeSource);
 		this.lt = lt;
-		typeSource.addAdapter(this);
 	}
 	
 	@Override

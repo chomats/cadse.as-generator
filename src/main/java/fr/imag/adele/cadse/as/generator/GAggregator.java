@@ -3,6 +3,11 @@ package fr.imag.adele.cadse.as.generator;
 import fr.imag.adele.cadse.core.GenContext;
 import fr.imag.adele.cadse.core.Item;
 
+/**
+ * Un aggregator des donnée recu des sous token.
+ * @author <a href="http://cadse.imag.fr">cadse team</a>
+ *
+ */
 public class GAggregator {
 
 	protected GResult _result;

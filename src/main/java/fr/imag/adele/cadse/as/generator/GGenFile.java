@@ -62,6 +62,13 @@ public class  GGenFile<S extends GenState> extends ObjectAdapter<GGenFile> imple
 		return GGenFile.class;
 	}
 
+	/**
+	 * 
+	 * @param g le genérateur associé
+	 * @param currentItem l'item courrant
+	 * @param cxt le context
+	 * @return le contenu du fichier ou null si déjà sauvé.
+	 */
 	public String generate(GGenerator g, Item currentItem, GenContext cxt) {
 		S state = createState();
 		init(state, currentItem, g, cxt);

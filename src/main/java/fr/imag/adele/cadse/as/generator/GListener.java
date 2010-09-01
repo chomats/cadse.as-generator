@@ -10,11 +10,16 @@ import fr.imag.adele.cadse.core.impl.CadseCore;
 import fr.imag.adele.cadse.core.transaction.delta.ImmutableItemDelta;
 import fr.imag.adele.cadse.core.transaction.delta.ImmutableWorkspaceDelta;
 
-public class GListener extends WorkspaceListener {
+/**
+ * TODO mettre un pattron visiteur
+ * @author chomats
+ *
+ */
+class GListener extends WorkspaceListener {
 	//GAction ga = new GAction();
 	RuntimeGenerator runtimeGenerator;
 	
-	public GListener(RuntimeGenerator runtimeGenerator) {
+	GListener(RuntimeGenerator runtimeGenerator) {
 		setKind(ListenerKind.BUILD);
 		CadseCore.getLogicalWorkspace().addListener(this, 0xFFFFF);
 		this.runtimeGenerator = runtimeGenerator;

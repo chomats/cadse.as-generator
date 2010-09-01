@@ -5,7 +5,15 @@ import fr.imag.adele.cadse.core.ItemType;
 import fr.imag.adele.cadse.core.transaction.delta.ImmutableItemDelta;
 import fr.imag.adele.cadse.objectadapter.ObjectAdapter;
 
-public class GRefer extends ObjectAdapter<GRefer> {
+/**
+ * Un type d'adapter permétant de configurer l'impact d'un changement pour le générateur.
+ * Il est possible d'implementé {@link #refer(Item)} ou {@link #refers(Item)}.
+ * Si le calcul dépend d'un delta ({@link ImmutableItemDelta}), il faut implémenter {@link #refers(Item, ImmutableItemDelta)}.
+ * 
+ * @author <a href="http://cadse.imag.fr">cadse team</a>
+ *
+ */
+public abstract class GRefer extends ObjectAdapter<GRefer> {
 
 	@Override
 	public Class<GRefer> getClassAdapt() {
@@ -19,7 +27,7 @@ public class GRefer extends ObjectAdapter<GRefer> {
 	public GRefer() {
 	}
 	
-	public Item refer(Item currentItem) {
+	protected Item refer(Item currentItem) {
 		return null;
 	}
 	
@@ -31,7 +39,7 @@ public class GRefer extends ObjectAdapter<GRefer> {
 	}
 	
 	public Item[] refers(Item currentItem, ImmutableItemDelta itemDelta){
-		return null;
+		return refers(currentItem);
 	}
 
 }

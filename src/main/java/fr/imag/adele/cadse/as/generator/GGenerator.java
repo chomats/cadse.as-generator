@@ -17,6 +17,10 @@ import fr.imag.adele.cadse.core.content.ContentItem;
 import fr.imag.adele.cadse.core.iter.ItemIterable;
 import fr.imag.adele.cadse.core.iter.ItemLinkIterable;
 
+/**
+ * @author <a href="http://cadse.imag.fr">cadse team</a>
+ *
+ */
 public class GGenerator implements GObject, IGenerator {
 
 	private static final UUID[] NO = new UUID[0];

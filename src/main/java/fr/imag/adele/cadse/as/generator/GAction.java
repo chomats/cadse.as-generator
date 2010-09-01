@@ -9,7 +9,11 @@ import fr.imag.adele.cadse.core.GenContext;
 import fr.imag.adele.cadse.core.Item;
 import fr.imag.adele.cadse.objectadapter.ObjectAdapter;
 import fr.imag.adele.fede.workspace.si.view.View;
-
+/**
+ * 
+ * @author <a href="http://cadse.imag.fr">cadse team</a>
+ *
+ */
 public class GAction extends ObjectAdapter<GAction> {
 
 	@Override

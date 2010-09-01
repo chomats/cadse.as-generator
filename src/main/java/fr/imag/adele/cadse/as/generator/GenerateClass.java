@@ -33,7 +33,7 @@ import fr.imag.adele.cadse.core.Item;
 /**
  * The Class GenerateClass.
  * 
- * @author <a href="mailto:stephane.chomat@imag.fr">Stephane Chomat</a>
+ * @author <a href="http://cadse.imag.fr">cadse team</a>
  */
 public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 
@@ -177,52 +177,4 @@ public class GenerateClass<S extends GenClassState> extends GGenFile<S> {
 			_resultMap.put(cToken.abs(), result);
 		}
 	}
-
-	// /**
-	// * Compute imports package.
-	// *
-	// * @param imports
-	// * the imports
-	// */
-	// public void computeImportsPackage(Set<String> imports) {
-	// String className = getExtendClassName();
-	// if (className != null) {
-	// String packageName = JavaIdentifier.packageName(className);
-	// imports.add(packageName);
-	// }
-	// }
-
-	// /**
-	// * Gets the content.
-	// *
-	// * @return the content
-	// */
-	// public String getContent() {
-	// Object generator;
-	// GResult sb = new GResult(generator);
-	//
-	// GenContext context = new GenContext(null);
-	// generateClass(sb, imports, context);
-	//
-	// GResult sb2 = new GResult();
-	// String license = getLicense();
-	// if (license != null) {
-	// sb.append(license).append("\n");
-	// }
-	// sb2.append("package ").append(_packageName).append(";");
-	// sb2.newline();
-	// sb2.newline();
-	// for (String itf : imports) {
-	// sb2.newline().append("import ").append(itf).append(";");
-	// }
-	// sb2.newline();
-	// sb2.newline();
-	// sb2.append(sb.toString());
-	//
-	// sb2.newline();
-	//
-	// return sb2.toString();
-	//
-	// }
-
 }
