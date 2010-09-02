@@ -12,7 +12,6 @@ import org.apache.felix.ipojo.annotations.Invalidate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.apache.felix.ipojo.annotations.Validate;
-import org.eclipse.core.runtime.CoreException;
 
 import fede.workspace.tool.view.WSPlugin;
 import fr.imag.adele.cadse.core.CadseException;
@@ -32,24 +31,23 @@ import fr.imag.adele.cadse.core.ui.view.ViewDescription;
 
 @Component(name = "fr.imag.adele.cadse.runtimeGenerator", immediate = true, architecture = true)
 @Provides(specifications = { IRuntimeGenerator.class })
-@Instantiate(name="fr.imag.adele.cadse.runtimeGenerator.instance")
+@Instantiate(name = "fr.imag.adele.cadse.runtimeGenerator.instance")
 public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 	GListener generatorListener = null;
 	private final static int DELAY = 10000;
 	GenerateMenuContributor generateMenu = null;
-	
-	private final class GenerateMenuContributor extends
-			AbstractActionContributor {
+
+	private final class GenerateMenuContributor extends AbstractActionContributor {
 		@Override
-		public void contributeMenuAction(ViewDescription viewDescription,
-				Menu menu, IItemNode[] selection) {
+		public void contributeMenuAction(ViewDescription viewDescription, Menu menu, IItemNode[] selection) {
 			List<Item> generateContent = getGenerateObject(selection);
 			if (generateContent.size() != 0) {
-				menu.insert(IMenuAction.CONTEXT_2_MENU, new GenerateAction(RuntimeGenerator.this, generateContent), true);
+				menu.insert(IMenuAction.CONTEXT_2_MENU, new GenerateAction(RuntimeGenerator.this, generateContent),
+						true);
 			}
 		}
 
-		protected List<Item> getGenerateObject(IItemNode[]  ssel) {
+		protected List<Item> getGenerateObject(IItemNode[] ssel) {
 			List<Item> ret = new ArrayList<Item>();
 			for (IItemNode iiv : ssel) {
 				try {
@@ -57,11 +55,11 @@ public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 					if (item != null && item.isResolved()) {
 						if (item.getType().adapt(GGenFile.class) != null)
 							ret.add(item);
-						
+
 						if (item.getType().adapt(GAction.class) != null)
 							ret.add(item);
 					}
-					
+
 				} catch (Throwable e) {
 					WSPlugin.logException(e);
 				}
@@ -74,35 +72,35 @@ public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 		Item item;
 		GGenFile<?> file;
 		GAction action;
-		
+
 		public Entry(Item item, GGenFile<?> file) {
 			super();
 			this.item = item;
 			this.file = file;
 		}
-		
+
 		public Entry(Item item, GAction action) {
 			super();
 			this.item = item;
 			this.action = action;
 		}
-		
+
 		@Override
 		public boolean equals(Object obj) {
-			if (obj instanceof Entry){
+			if (obj instanceof Entry) {
 				Entry e = (Entry) obj;
 				return e.action == action && e.file == file && e.item == item;
 			}
 			return false;
 		}
-		
+
 	}
-	
-	@Requires
+
+	@Requires(proxy = false, nullable = false)
 	IGenerator[] _generators;
 	private boolean end;
-	BlockingQueue<Entry>	_filesToGenrate	= new LinkedBlockingQueue<Entry>();
-	
+	BlockingQueue<Entry> _filesToGenrate = new LinkedBlockingQueue<Entry>();
+
 	public RuntimeGenerator() {
 	}
 
@@ -159,35 +157,36 @@ public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 		generatorListener = new GListener(this);
 		generateMenu = new GenerateMenuContributor();
 		CadseGCST.ITEM.addActionContributeur(generateMenu);
-		
-		CadseCore.getLogicalWorkspace().addLogicalWorkspaceTransactionListener(new AbstractLogicalWorkspaceTransactionListener() {
-			@Override
-			public void notifyCommitTransaction(LogicalWorkspaceTransaction wc)
-					throws CadseException {
-				for (ItemDelta d : wc.getItemsDelta()) {
-					if (d.isLoaded())
-						generate(d.getBaseItem());
-				}
-			}
-		});
-		
-		while(!end) {
+
+		CadseCore.getLogicalWorkspace().addLogicalWorkspaceTransactionListener(
+				new AbstractLogicalWorkspaceTransactionListener() {
+					@Override
+					public void notifyCommitTransaction(LogicalWorkspaceTransaction wc) throws CadseException {
+						for (ItemDelta d : wc.getItemsDelta()) {
+							if (d.isLoaded())
+								generate(d.getBaseItem());
+						}
+					}
+				});
+
+		while (!end) {
 			Entry e = null;
 			try {
 				e = _filesToGenrate.take();
 			} catch (InterruptedException e1) {
 				continue;
 			}
-			
-			if (e == null) continue;
-			
+
+			if (e == null)
+				continue;
+
 			if (e.file != null) {
 				GenContext cxt = new GenContext(null);
 				GAction ga = e.item.getType().adapt(GAction.class);
 				if (ga == null)
 					ga = new GAction();
 				try {
-					ga.generate(e.file, e.item, cxt );
+					ga.generate(e.file, e.item, cxt);
 				} catch (Throwable ex) {
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
@@ -206,7 +205,8 @@ public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 
 	@Override
 	public void generate(Item item) {
-		if (item == null) return;
+		if (item == null)
+			return;
 		GGenFile<?>[] gf = item.getType().adapts(GGenFile.class);
 		if (gf != null) {
 			for (GGenFile<?> gGenFile : gf) {
@@ -220,7 +220,7 @@ public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 
 	@Override
 	synchronized public void generate(Item item, GGenFile<?> file) {
-		Entry e = new Entry(item,file);
+		Entry e = new Entry(item, file);
 		if (!_filesToGenrate.contains(e))
 			_filesToGenrate.add(e);
 	}
