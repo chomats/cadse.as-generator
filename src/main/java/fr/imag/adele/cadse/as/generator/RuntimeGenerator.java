@@ -151,7 +151,12 @@ public class RuntimeGenerator implements IRuntimeGenerator, Runnable {
 			}
 		if (_generators != null) {
 			for (IGenerator g : _generators) {
-				g.load(this);
+				try {
+					g.load(this);
+				} catch (Throwable e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		generatorListener = new GListener(this);
