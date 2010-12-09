@@ -90,7 +90,7 @@ class GListener extends WorkspaceListener {
 	 * @return true if stop analyse
 	 */
 	void computeToGenerate(HashSet<Item> toRegenerate, Item item) {
-		if (item == null) {
+		if (item == null || item.isRuntime()) {
 			return;
 		}
 		if (toRegenerate.contains(item))
